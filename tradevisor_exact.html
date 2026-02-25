@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradevisor - #1 AI Trading Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-darker: #050811;
+            --gold: #d4a954;
+            --gold-light: #f0ad4e;
+            --green: #1abc9c;
+            --green-bright: #00d4aa;
+            --red: #ff4757;
+            --text-primary: #ffffff;
+            --text-secondary: #a8b5c5;
+            --border-color: #1a2847;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #050811;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 5%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(5, 8, 17, 0.5) 0%, rgba(10, 14, 39, 0.3) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(212, 169, 84, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 25s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-40px); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1400px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.8s ease-out;
+            letter-spacing: -1px;
+        }
+
+        .hero-text h1 span {
+            color: var(--gold-light);
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+            line-height: 1.7;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        .btn {
+            padding: 0.9rem 2.2rem;
+            font-size: 0.95rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #f0ad4e 0%, #ffc107 100%);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(240, 173, 78, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(240, 173, 78, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--gold-light);
+            color: var(--gold-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(240, 173, 78, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .chart-container {
+            position: relative;
+            animation: slideInRight 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .chart-mockup {
+            background: rgba(15, 25, 50, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ticker {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .ticker-price {
+            color: var(--gold-light);
+            font-size: 1.2rem;
+            margin-top: 0.25rem;
+            font-weight: 700;
+        }
+
+        .badge {
+            background: rgba(212, 169, 84, 0.2);
+            border: 1px solid var(--gold);
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .chart-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat {
+            background: rgba(26, 212, 170, 0.15);
+            border: 1px solid rgba(26, 212, 170, 0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            color: var(--green-bright);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stats-info {
+            margin-top: 1.2rem;
+            padding: 1rem;
+            background: rgba(212, 169, 84, 0.12);
+            border: 1px solid rgba(212, 169, 84, 0.25);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats-info-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(212, 169, 84, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .stats-info-text h4 {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        .stats-info-text p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Stats Below Hero */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(26, 40, 71, 0.7) 0%, rgba(10, 14, 39, 0.7) 100%);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .stat-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* ===== COMMUNITY WINS SECTION ===== */
+        .community-wins {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-badge {
+            background: rgba(212, 169, 84, 0.15);
+            border: 1px solid var(--gold);
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+        }
+
+        .section-title span {
+            color: var(--green-bright);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .wins-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+        }
+
+        .win-card {
+            background: linear-gradient(135deg, rgba(26, 40, 71, 0.5) 0%, rgba(10, 14, 39, 0.5) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .win-card:hover {
+            border-color: var(--green-bright);
+            transform: translateY(-5px);
+        }
+
+        .win-chart {
+            height: 180px;
+            background: linear-gradient(135deg, rgba(26, 212, 170, 0.1) 0%, rgba(255, 71, 87, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .win-chart svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .win-profit-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--green-bright);
+            color: #000;
+            padding: 0.4rem 0.9rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            z-index: 5;
+        }
+
+        .win-content {
+            padding: 1.5rem;
+        }
+
+        .win-ticker {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .win-signal {
+            background: rgba(212, 169, 84, 0.2);
+            color: var(--gold);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .win-entry-exit {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .entry-exit-item {
+            font-size: 0.85rem;
+        }
+
+        .entry-exit-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .entry-exit-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .win-profit {
+            background: rgba(26, 212, 170, 0.15);
+            border: 1px solid rgba(26, 212, 170, 0.3);
+            padding: 1.2rem;
+            border-radius: 10px;
+        }
+
+        .profit-label {
+            color: var(--green-bright);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .profit-amount {
+            font-size: 1.8rem;
+            color: var(--green-bright);
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .profit-username {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .view-more-btn {
+            display: block;
+            margin: 3rem auto 0;
+            padding: 0.9rem 2.2rem;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-more-btn:hover {
+            background: rgba(212, 169, 84, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ADVANCED FEATURES ===== */
+        .advanced-features {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .features-intro {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .features-title-box {
+            background: linear-gradient(90deg, rgba(212, 169, 84, 0.15) 0%, rgba(212, 169, 84, 0) 100%);
+            border: 2px solid var(--gold);
+            padding: 1.2rem 2.5rem;
+            border-radius: 25px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .features-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .metric-box {
+            background: rgba(26, 40, 71, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .metric-box:hover {
+            border-color: var(--gold);
+        }
+
+        .metric-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .metric-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--gold);
+            margin-bottom: 0.4rem;
+        }
+
+        .metric-value {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(26, 40, 71, 0.5) 0%, rgba(10, 14, 39, 0.5) 100%);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(212, 169, 84, 0.2);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-checks {
+            list-style: none;
+        }
+
+        .feature-checks li {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .feature-checks li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--green-bright);
+            font-weight: 700;
+        }
+
+        .feature-cta {
+            color: var(--gold);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Alerts Section */
+        .alerts-section {
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .alerts-chart {
+            background: rgba(26, 40, 71, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alerts-label {
+            position: absolute;
+            top: 1.5rem;
+            left: 2rem;
+            background: rgba(212, 169, 84, 0.2);
+            border: 1px solid var(--gold);
+            padding: 0.4rem 1.2rem;
+            border-radius: 15px;
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        /* ===== TRACK RECORD ===== */
+        .track-record {
+            padding: 4rem 5%;
+            background: rgba(26, 40, 71, 0.2);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .track-record-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .record-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .record-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .record-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .record-stat {
+            background: linear-gradient(135deg, rgba(26, 40, 71, 0.5) 0%, rgba(10, 14, 39, 0.5) 100%);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .record-stat:hover {
+            border-color: var(--gold);
+        }
+
+        .record-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .record-value.green {
+            color: var(--green-bright);
+        }
+
+        .record-value.gold {
+            color: var(--gold);
+        }
+
+        .record-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+        }
+
+        .record-detail {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* ===== URGENCY SECTION ===== */
+        .urgency-section {
+            padding: 4rem 5%;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .urgency-box {
+            background: rgba(212, 169, 84, 0.12);
+            border: 2px solid rgba(212, 169, 84, 0.3);
+            padding: 1.2rem 2.5rem;
+            border-radius: 15px;
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .urgency-box span {
+            font-weight: 700;
+        }
+
+        .large-cta-btn {
+            padding: 1.2rem 3.5rem;
+            font-size: 1.1rem;
+            background: linear-gradient(90deg, #f0ad4e 0%, #ffc107 100%);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(240, 173, 78, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .large-cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(240, 173, 78, 0.4);
+        }
+
+        .cancel-text {
+            color: var(--text-secondary);
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* ===== PRICING ===== */
+        .pricing {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .pricing-title-box {
+            background: linear-gradient(90deg, rgba(212, 169, 84, 0.15) 0%, rgba(212, 169, 84, 0) 100%);
+            border: 2px solid var(--gold);
+            padding: 1.2rem 2.5rem;
+            border-radius: 25px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .pricing-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, rgba(26, 40, 71, 0.6) 0%, rgba(10, 14, 39, 0.6) 100%);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:nth-child(2) {
+            border-color: var(--gold);
+        }
+
+        .pricing-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-8px);
+        }
+
+        .pricing-premium-badge {
+            display: none;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--gold);
+            color: #000;
+            padding: 0.4rem 1.2rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .pricing-card:nth-child(2) .pricing-premium-badge {
+            display: block;
+        }
+
+        .pricing-icon {
+            width: 90px;
+            height: 90px;
+            background: rgba(212, 169, 84, 0.2);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .pricing-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-name.green {
+            color: var(--green-bright);
+        }
+
+        .pricing-name.gold {
+            color: var(--gold);
+        }
+
+        .pricing-price {
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .price-amount {
+            font-size: 2.2rem;
+            color: var(--gold);
+            font-weight: 800;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            margin-right: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .pricing-period {
+            color: var(--text-secondary);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .sale-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 71, 87, 0.15);
+            color: var(--red);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features li {
+            padding: 0.9rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-features li::before {
+            content: '●';
+            color: var(--gold);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-btn.green {
+            background: var(--green-bright);
+            color: #000;
+        }
+
+        .pricing-btn.green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 212, 170, 0.3);
+        }
+
+        .pricing-btn.gold {
+            background: var(--gold);
+            color: #000;
+        }
+
+        .pricing-btn.gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 169, 84, 0.3);
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .testimonials-title-box {
+            background: linear-gradient(90deg, rgba(212, 169, 84, 0.15) 0%, rgba(212, 169, 84, 0) 100%);
+            border: 2px solid var(--gold);
+            padding: 1.2rem 2.5rem;
+            border-radius: 25px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .testimonials-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stars {
+            color: var(--gold);
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+        }
+
+        .rating-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(26, 40, 71, 0.5) 0%, rgba(10, 14, 39, 0.5) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-stars {
+            color: var(--gold);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            min-height: 80px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .author-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--gold), var(--green-bright));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .author-info h4 {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        .author-info p {
+            color: var(--green-bright);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .testimonial-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, rgba(26, 212, 170, 0.15), rgba(212, 169, 84, 0.15));
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profit-badge-testimonial {
+            position: absolute;
+            bottom: 0.8rem;
+            right: 0.8rem;
+            background: var(--green-bright);
+            color: #000;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(5, 8, 17, 0.95);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 5%;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-section h4 {
+            color: var(--gold);
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .wins-grid,
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .record-stats,
+            .performance-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .wins-grid,
+            .features-grid,
+            .record-stats,
+            .performance-metrics,
+            .testimonials-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .features-title-box,
+            .pricing-title-box,
+            .testimonials-title-box {
+                font-size: 1.6rem;
+                padding: 1rem 1.8rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Tradevisor</div>
+        <ul class="nav-links">
+            <li><a href="#wins">Community Wins</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Trade smarter with <span>Tradevisor</span></h1>
+                <p>A powerful trading tool that instantly alerts you when to buy and sell.</p>
+                <p>Get precise market signals with real-time data and smart algorithms.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary">Start Trading →</button>
+                    <button class="btn btn-secondary">Tutorial</button>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-mockup">
+                    <div class="chart-header">
+                        <div>
+                            <div class="ticker">📈 S&P 500 Index</div>
+                            <div class="ticker-price">6,449.78</div>
+                        </div>
+                        <div class="badge">⭐ #1 AI TRADING TOOL</div>
+                    </div>
+                    
+                    <svg viewBox="0 0 400 200" style="width: 100%; height: 200px; margin: 1.2rem 0;">
+                        <defs>
+                            <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:rgba(26,212,170,0.4);stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:rgba(26,212,170,0);stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <polyline points="20,120 50,90 80,70 110,95 140,50 170,30 200,75 230,55 260,40 290,70 320,50 350,30 380,60" fill="none" stroke="#1abc9c" stroke-width="2.5"/>
+                        <polygon points="20,120 50,90 80,70 110,95 140,50 170,30 200,75 230,55 260,40 290,70 320,50 350,30 380,60 380,200 20,200" fill="url(#chartGrad)"/>
+                    </svg>
+
+                    <div class="chart-stats">
+                        <div class="stat">
+                            <div class="stat-value">17,918</div>
+                            <div class="stat-label">Active Members</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">98%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-info">
+                        <div class="stats-info-icon">🎯</div>
+                        <div class="stats-info-text">
+                            <h4>AI Indicator</h4>
+                            <p>TradingView signals • $2.4M+ shared • Since 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat-card">
+                <h3>17,918</h3>
+                <p>Active Members</p>
+            </div>
+            <div class="stat-card">
+                <h3>98%</h3>
+                <p>Success Rate</p>
+            </div>
+            <div class="stat-card">
+                <h3>24/7</h3>
+                <p>Support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Wins Section -->
+    <section class="community-wins" id="wins">
+        <div class="section-header">
+            <div class="section-badge">📈 COMMUNITY WINS</div>
+            <h2 class="section-title">Real <span>Wins</span> from our members</h2>
+            <p class="section-subtitle">Trading wins shared by members using our AI signals</p>
+        </div>
+
+        <div class="wins-grid">
+            <!-- PLTR -->
+            <div class="win-card">
+                <div class="win-chart">
+                    <svg viewBox="0 0 250 150" style="width: 100%; height: 100%;">
+                        <defs>
+                            <linearGradient id="chart1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1abc9c;stop-opacity:0.3" />
+                                <stop offset="100%" style="stop-color:#1abc9c;stop-opacity:0" />
+                            </linearGradient>
+                        </defs>
+                        <polyline points="10,130 30,110 50,85 70,100 90,55 110,35 130,75 150,55 170,40 190,70 210,50 230,30" fill="none" stroke="#1abc9c" stroke-width="2"/>
+                        <polygon points="10,130 30,110 50,85 70,100 90,55 110,35 130,75 150,55 170,40 190,70 210,50 230,30 230,150 10,150" fill="url(#chart1)"/>
+                    </svg>
+                    <div class="win-profit-badge">PROFIT</div>
+                </div>
+                <div class="win-content">
+                    <div class="win-ticker">$PLTR</div>
+                    <div class="win-signal">AI Signal - Long Position</div>
+                    <div class="win-entry-exit">
+                        <div class="entry-exit-item">
+                            <div class="entry-exit-label">Entry:</div>
+                            <div class="entry-exit-value">$49.85</div>
+                        </div>
+                        <div class="entry-exit-item">
+                            <div class="entry-exit-label">Exit:</div>
+                            <div class="entry-exit-value">$70.77</div>
+                        </div>
+                    </div>
+                    <div class="win-profit">
+                        <div class="profit-label">💰 PROFIT</div>
+                        <div class="profit-amount">+$13,574</div>
+                        <div class="profit-username">@yvvz</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ETH/USD -->
+            <div class="win-card">
+                <div class="win-chart">
+                    <svg viewBox="0 0 250 150" style="width: 100%; height: 100%;">
+                        <defs>
+                            <linearGradient id="chart2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1abc9c;stop-opacity:0.3" />
+                                <stop offset="100%" style="stop-color:#1abc9c;stop-opacity:0" />
+                            </linearGradient>
+                        </defs>
+                        <polyline points="10,140 30,115 50,80 70,105 90,45 110,25 130,80 150,60 170,35 190,75 210,55 230,20" fill="none" stroke="#1abc9c" stroke-width="2"/>
+                        <polygon points="10,140 30,115 50,80 70,105 90,45 110,25 130,80 150,60 170,35 190,75 210,55 230,20 230,150 10,150" fill="url(#chart2)"/>
+                    </svg>
+                    <div class="win-profit-badge">PROFIT</div>
+                </div>
+                <div class="win-content">
+                    <div class="win-ticker">$ETH/USD</div>
+                    <div class="win-signal">AI Signal - Swing Trade</div>
+                    <div class="win-entry-exit">
+                        <div class="entry-exit-item">
+                            <div class="entry-exit-label">Entry:</div>
+                            <div class="entry-exit-value">$2,552.47</div>
+                        </div>
+                        <div class="entry-exit-item">
+                            <div class="entry-exit-label">Exit:</div>
+                            <div class="entry-exit-value">$3,600.59</div>
+                        </div>
+                    </div>
+                    <div class="win-profit">
+                        <div class="profit-label">💰 PROFIT</div>
+                        <div class="profit-amount">+$26,305</div>
+                        <div class="profit-username">@TestisAtchel</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TSLA -->
+            <div class="win-card">
+                <div class="win-chart">
+                    <svg viewBox="0 0 250 150" style="width: 100%; height: 100%;">
+                        <defs>
+                            <linearGradient id="chart3" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1abc9c;stop-opacity:0.3" />
+                                <stop offset="100%" style="stop-color:#1abc9c;stop-opacity:0" />
+                            </linearGradient>
+                        </defs>
+                        <polyline points="10,135 30,120 50,90 70,110 90,60 110,40 130,80 150,65 170,45 190,75 210,55 230,25" fill="none" stroke="#1abc9c" stroke-width="2"/>
+                        <polygon points="10,135 30,120 50,90 70,110 90,60 110,40 130,80 150,65 170,45 190,75 210,55 230,25 230,150 10,150" fill="url(#chart3)"/>
+                    </svg>
+                    <div class="win-profit-badge">PROFIT</div>
+                </div>
+                <div class="win-content">
+                    <div class="win-ticker">$TSLA</div>
+                    <div class="win-signal">AI Signal - Call Options</div>
+                    <div class="win-entry-exit">
+                        <div class="entry-exit-item">
+                            <div class="entry-exit-label">Entry:</div>
+                            <div class="entry-exit-value">$274.35</div>
+                        </div>
+                        <div class="entry-exit-item">
+                            <div class="entry-exit-label">Exit:</div>
+                            <div class="entry-exit-value">$346.70</div>
+                        </div>
+                    </div>
+                    <div class="win-profit">
+                        <div class="profit-label">💰 PROFIT</div>
+                        <div class="profit-amount">+$13,900</div>
+                        <div class="profit-username">@C00WPAW</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="view-more-btn">View More →</button>
+    </section>
+
+    <!-- Advanced Features Section -->
+    <section class="advanced-features" id="features">
+        <div class="features-intro">
+            <div class="section-badge">🤖 AI-POWERED TRADING TOOLS</div>
+            <div class="features-title-box">[ ADVANCED_FEATURES ]</div>
+            <p class="features-subtitle">Stop guessing. Start winning. Our AI analyzes millions of data points per second to give you unfair advantages in the market.</p>
+        </div>
+
+        <div class="performance-metrics">
+            <div class="metric-box">
+                <div class="metric-icon">🎯</div>
+                <div class="metric-title">94.7% accuracy</div>
+                <div class="metric-value">High precision</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-icon">⚡</div>
+                <div class="metric-title">0.7s response time</div>
+                <div class="metric-value">Lightning fast</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-icon">📊</div>
+                <div class="metric-title">50+ variables</div>
+                <div class="metric-value">Advanced analysis</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-icon">📈</div>
+                <div class="metric-title">±0.02% precision</div>
+                <div class="metric-value">Ultra-accurate</div>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">AI-Powered Entry & Exit Signals</h3>
+                <p class="feature-description">Know exactly when to BUY and when to SELL. Our AI analyzes 200+ indicators to give you clear signals with confidence scores.</p>
+                <ul class="feature-checks">
+                    <li>200+ indicators analyzed</li>
+                    <li>Confidence scoring</li>
+                    <li>Risk assessment included</li>
+                </ul>
+                <div class="feature-cta">✨ Remove emotion from trading</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Neural Network Momentum Engine</h3>
+                <p class="feature-description">Predict momentum shifts before they happen. Trained on 15+ years data, our ML engine spots trend reversals with precision.</p>
+                <ul class="feature-checks">
+                    <li>15+ years training data</li>
+                    <li>Trend reversal detection</li>
+                    <li>Order flow analysis</li>
+                </ul>
+                <div class="feature-cta">✨ Stay ahead of the market</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Quantum Trend Analysis</h3>
+                <p class="feature-description">Multi-timeframe trend detection analyzing 50+ indicators. Auto-adjusting sensitivity for fewer false signals.</p>
+                <ul class="feature-checks">
+                    <li>Multi-timeframe analysis</li>
+                    <li>Auto-adjusting sensitivity</li>
+                    <li>Market breadth tracking</li>
+                </ul>
+                <div class="feature-cta">✨ Trade with the trend</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3 class="feature-title">Algorithmic Entry Optimization</h3>
+                <p class="feature-description">Perfect entries every time. Our AI factors in volatility and order flow to maximize your risk-reward ratio automatically.</p>
+                <ul class="feature-checks">
+                    <li>Slippage minimization</li>
+                    <li>R:R optimization</li>
+                    <li>Scaling recommendations</li>
+                </ul>
+                <div class="feature-cta">✨ Maximize your profits</div>
+            </div>
+        </div>
+
+        <div class="alerts-section">
+            <div class="alerts-label">💡 Real-Time Alerts</div>
+            <div class="alerts-chart">
+                <svg viewBox="0 0 900 300" style="width: 100%; height: 100%;">
+                    <defs>
+                        <linearGradient id="alertGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#1abc9c;stop-opacity:0.2" />
+                            <stop offset="50%" style="stop-color:#ff4757;stop-opacity:0.1" />
+                            <stop offset="100%" style="stop-color:#ff4757;stop-opacity:0" />
+                        </linearGradient>
+                    </defs>
+                    <polyline points="20,220 60,180 100,160 140,200 180,120 220,80 260,140 300,110 340,90 380,150 420,110 460,70 500,130 540,90 580,70 620,120 660,95 700,100 740,140 780,110 820,80 860,120" fill="none" stroke="#1abc9c" stroke-width="3"/>
+                    <polygon points="20,220 60,180 100,160 140,200 180,120 220,80 260,140 300,110 340,90 380,150 420,110 460,70 500,130 540,90 580,70 620,120 660,95 700,100 740,140 780,110 820,80 860,120 860,300 20,300" fill="url(#alertGrad)"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Track Record -->
+    <section class="track-record">
+        <div class="track-record-content">
+            <div class="record-title">Proven Track Record</div>
+            <p class="record-subtitle">Real performance metrics from our trading community</p>
+            
+            <div class="record-stats">
+                <div class="record-stat">
+                    <div class="record-value green">94.7%</div>
+                    <div class="record-label">Win Rate</div>
+                    <div class="record-detail">Last 90 days</div>
+                </div>
+                <div class="record-stat">
+                    <div class="record-value">$100 → <span style="color: var(--green-bright);">$3,400</span></div>
+                    <div class="record-label">Average User Returns</div>
+                    <div class="record-detail">approx 34x initial investment</div>
+                </div>
+                <div class="record-stat">
+                    <div class="record-value gold">0.7s</div>
+                    <div class="record-label">Alert Speed</div>
+                    <div class="record-detail">Lightning fast</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section class="urgency-section">
+        <div class="record-stats" style="margin-bottom: 2rem;">
+            <div class="record-stat">
+                <div class="record-value green">94.7%</div>
+                <div class="record-label">Win Rate</div>
+            </div>
+            <div class="record-stat">
+                <div class="record-value">$127M+</div>
+                <div class="record-label">Total Profits</div>
+            </div>
+            <div class="record-stat">
+                <div class="record-value gold">94.7%</div>
+                <div class="record-label">Win Rate</div>
+            </div>
+        </div>
+
+        <div class="urgency-box">
+            ⚡ <span>Limited Time:</span> Lock in current pricing before next price increase.
+        </div>
+        
+        <button class="large-cta-btn">Start Trading Smarter Today →</button>
+        <p class="cancel-text">Cancel anytime.</p>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-header">
+            <div class="section-badge">💎 CHOOSE YOUR PLAN</div>
+            <div class="pricing-title-box">[ CHOOSE_YOUR_PATH ]</div>
+            <p class="pricing-subtitle">Select the perfect plan to accelerate your trading journey with our AI-powered signals and proven strategies.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Indicator -->
+            <div class="pricing-card">
+                <div class="pricing-icon">🟢</div>
+                <h3 class="pricing-name green">TradeVisor Indicator</h3>
+                <div class="pricing-price">
+                    <span class="original-price">$78</span>
+                    <span class="price-amount">$25</span>
+                </div>
+                <div class="pricing-period">Weekly subscription • Cancel anytime</div>
+                <div class="sale-badge">🚀 BEGINNER SALE ⚡</div>
+                <ul class="pricing-features">
+                    <li>AI-powered BUY & SELL signals</li>
+                    <li>Advanced AI-powered market analysis</li>
+                    <li>TradingView premium indicator integration</li>
+                    <li>Multi-timeframe market analysis</li>
+                    <li>24/7 automated market monitoring</li>
+                    <li>Risk management & stop-loss alerts</li>
+                    <li>Custom indicator settings & optimization</li>
+                    <li>Mobile & desktop notifications</li>
+                </ul>
+                <button class="pricing-btn green">Get Indicator Access</button>
+            </div>
+
+            <!-- Lifetime -->
+            <div class="pricing-card">
+                <div class="pricing-premium-badge">PREMIUM</div>
+                <div class="pricing-icon">🟡</div>
+                <h3 class="pricing-name gold">Lifetime TradeVisor</h3>
+                <div class="pricing-price">
+                    <span class="original-price">$1,750</span>
+                    <span class="price-amount">$850</span>
+                </div>
+                <div class="pricing-period">One-time payment • Lifetime access</div>
+                <div class="sale-badge">🚀 BEGINNER SALE ⚡</div>
+                <ul class="pricing-features">
+                    <li>AI-powered BUY & SELL signals</li>
+                    <li>Advanced AI-powered market analysis</li>
+                    <li>TradingView premium indicator integration</li>
+                    <li>Multi-timeframe market analysis</li>
+                    <li>24/7 automated market monitoring</li>
+                    <li>Risk management & stop-loss alerts</li>
+                    <li>Custom indicator settings & optimization</li>
+                    <li>Mobile & desktop notifications</li>
+                </ul>
+                <button class="pricing-btn gold">Get Lifetime Access</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials-header">
+            <div class="section-badge">💬 CUSTOMER TESTIMONIALS</div>
+            <div class="testimonials-title-box">[ CUSTOMER_TESTIMONIALS ]</div>
+            <div class="testimonials-rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text">5.0 on Whop</span>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.8rem;">Real results from real community members</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-text">"Changed my life! Went from broke to 136 in like 3 months just following the signals 🚀"</div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">D</div>
+                    <div class="author-info">
+                        <h4>@Dvrt</h4>
+                        <p>$13,000 first 90 days</p>
+                    </div>
+                </div>
+                <div class="testimonial-image">
+                    💳
+                    <div class="profit-badge-testimonial">$13,000 Profit</div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-text">"From $3,000 to $256,880 in my checking account in just 8 months! The trading algorithms completely transformed my financial life."</div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">R</div>
+                    <div class="author-info">
+                        <h4>@Robertchang98_</h4>
+                        <p>$256,880 account balance</p>
+                    </div>
+                </div>
+                <div class="testimonial-image">
+                    📊
+                    <div class="profit-badge-testimonial">$253K+ Growth Profit</div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-text">"Best investment ive made tbh. ROI is insane the automated signals are just unmatched"</div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">E</div>
+                    <div class="author-info">
+                        <h4>@Elickz</h4>
+                        <p>$156,000 in 6 months</p>
+                    </div>
+                </div>
+                <div class="testimonial-image">
+                    💰
+                    <div class="profit-badge-testimonial">$156,000 Profit</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#">Contact Support</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Disclaimer</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">Documentation</a>
+                    <a href="#">API Reference</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Community</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Social</h4>
+                    <a href="#">Twitter</a>
+                    <a href="#">Discord</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">YouTube</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tradevisor. All rights reserved. • Premium Trading Platform for Smart Investors</p>
+                <p style="margin-top: 1rem; font-size: 0.8rem;">⚠️ Disclaimer: Trading involves substantial risk. Past performance does not guarantee future results. Always trade responsibly.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
